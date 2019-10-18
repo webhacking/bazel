@@ -15,7 +15,6 @@ package com.google.devtools.build.lib.runtime.commands;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.devtools.build.lib.analysis.config.CoreOptions.IncludeConfigFragmentsEnum;
 import com.google.devtools.build.lib.buildtool.BuildRequest;
 import com.google.devtools.build.lib.buildtool.CqueryBuildTool;
 import com.google.devtools.build.lib.events.Event;
@@ -57,9 +56,11 @@ public final class CqueryCommand implements BlazeCommand {
 
   @Override
   public void editOptions(OptionsParser optionsParser) {
-    CqueryOptions cqueryOptions = optionsParser.getOptions(CqueryOptions.class);
     try {
-      if (!cqueryOptions.transitions.equals(CqueryOptions.Transitions.NONE)) {
+      if (!optionsParser
+          .getOptions(CqueryOptions.class)
+          .transitions
+          .equals(CqueryOptions.Transitions.NONE)) {
         optionsParser.parse(
             PriorityCategory.COMPUTED_DEFAULT,
             "Option required by setting the --transitions flag",
@@ -69,14 +70,6 @@ public final class CqueryCommand implements BlazeCommand {
           PriorityCategory.COMPUTED_DEFAULT,
           "Options required by cquery",
           ImmutableList.of("--nobuild"));
-      if (cqueryOptions.showRequiredConfigFragments != IncludeConfigFragmentsEnum.OFF) {
-        optionsParser.parse(
-            PriorityCategory.COMPUTED_DEFAULT,
-            "Options required by cquery's --show_config_fragments flag",
-            ImmutableList.of(
-                "--include_config_fragments_provider="
-                    + cqueryOptions.showRequiredConfigFragments));
-      }
     } catch (OptionsParsingException e) {
       throw new IllegalStateException("Cquery's known options failed to parse", e);
     }

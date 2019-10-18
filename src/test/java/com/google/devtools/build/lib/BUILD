@@ -54,7 +54,6 @@ filegroup(
         "//src/test/java/com/google/devtools/build/lib/profiler/callcounts:srcs",
         "//src/test/java/com/google/devtools/build/lib/profiler/memory:srcs",
         "//src/test/java/com/google/devtools/build/lib/query2:srcs",
-        "//src/test/java/com/google/devtools/build/lib/query2/engine:srcs",
         "//src/test/java/com/google/devtools/build/lib/query2/testutil:srcs",
         "//src/test/java/com/google/devtools/build/lib/remote:srcs",
         "//src/test/java/com/google/devtools/build/lib/rules/android:srcs",
@@ -1236,6 +1235,21 @@ java_test(
         ":guava_junit_truth",
         "//src/main/java/com/google/devtools/build/lib:build-base",
         "//third_party/protobuf:protobuf_java",
+    ],
+)
+
+java_test(
+    name = "query2-tests",
+    size = "large",
+    shard_count = 20,
+    tags = [
+        "no_windows",
+        "query2",
+    ],
+    test_class = "com.google.devtools.build.lib.AllTests",
+    runtime_deps = [
+        ":test_runner",
+        "//src/test/java/com/google/devtools/build/lib/query2:Query2Tests_lib",
     ],
 )
 

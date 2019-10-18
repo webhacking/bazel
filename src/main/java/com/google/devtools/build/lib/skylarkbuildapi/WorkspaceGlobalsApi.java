@@ -83,7 +83,7 @@ public interface WorkspaceGlobalsApi {
       useStarlarkThread = true)
   NoneType workspace(
       String name,
-      SkylarkDict<?, ?> managedDirectories, // <String, SkylarkList<String>>
+      SkylarkDict<String, Object> managedDirectories,
       FuncallExpression ast,
       StarlarkThread thread)
       throws EvalException, InterruptedException;

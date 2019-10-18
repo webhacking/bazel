@@ -20,7 +20,6 @@ test_suite(
         ":PyProviderUtilsTest",
         ":PyRuntimeConfiguredTargetTest",
         ":PyRuntimeInfoTest",
-        ":PyStarlarkTransitionsTest",
         ":PyStructUtilsTest",
         ":PyTestConfiguredTargetTest",
         ":PythonConfigurationTest",
@@ -245,21 +244,6 @@ java_test(
         "//src/main/java/com/google/devtools/build/lib/collect/nestedset",
         "//src/main/java/com/google/devtools/build/lib/vfs:pathfragment",
         "//src/test/java/com/google/devtools/build/lib/skylark:testutil",
-        "//third_party:junit4",
-        "//third_party:truth",
-    ],
-)
-
-java_test(
-    name = "PyStarlarkTransitionsTest",
-    srcs = ["PyStarlarkTransitionsTest.java"],
-    deps = [
-        "//src/main/java/com/google/devtools/build/lib:build-base",
-        "//src/main/java/com/google/devtools/build/lib:packages-internal",
-        "//src/main/java/com/google/devtools/build/lib:python-rules",
-        "//src/main/java/com/google/devtools/build/lib/cmdline",
-        "//src/test/java/com/google/devtools/build/lib:analysis_testutil",
-        "//third_party:guava",
         "//third_party:junit4",
         "//third_party:truth",
     ],

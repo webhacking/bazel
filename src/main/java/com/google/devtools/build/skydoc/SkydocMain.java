@@ -108,7 +108,6 @@ import com.google.devtools.build.skydoc.fakebuildapi.proto.FakeProtoInfoApiProvi
 import com.google.devtools.build.skydoc.fakebuildapi.proto.FakeProtoModule;
 import com.google.devtools.build.skydoc.fakebuildapi.python.FakePyInfo.FakePyInfoProvider;
 import com.google.devtools.build.skydoc.fakebuildapi.python.FakePyRuntimeInfo.FakePyRuntimeInfoProvider;
-import com.google.devtools.build.skydoc.fakebuildapi.python.FakePyStarlarkTransitions;
 import com.google.devtools.build.skydoc.fakebuildapi.repository.FakeRepositoryModule;
 import com.google.devtools.build.skydoc.fakebuildapi.test.FakeAnalysisFailureInfoProvider;
 import com.google.devtools.build.skydoc.fakebuildapi.test.FakeAnalysisTestResultInfoProvider;
@@ -579,10 +578,7 @@ public class SkydocMain {
             new SkylarkAspectStub(),
             new ProviderStub());
     PyBootstrap pyBootstrap =
-        new PyBootstrap(
-            new FakePyInfoProvider(),
-            new FakePyRuntimeInfoProvider(),
-            new FakePyStarlarkTransitions());
+        new PyBootstrap(new FakePyInfoProvider(), new FakePyRuntimeInfoProvider());
     RepositoryBootstrap repositoryBootstrap =
         new RepositoryBootstrap(new FakeRepositoryModule(ruleInfoList));
     TestingBootstrap testingBootstrap =

@@ -55,11 +55,9 @@ public final class AndroidProguardInfo extends NativeInfo
     }
 
     @Override
-    public AndroidProguardInfo createInfo(SkylarkList<?> localProguardSpecs) // <Artifact>
+    public AndroidProguardInfo createInfo(SkylarkList<Artifact> localProguardSpecs)
         throws EvalException {
-      return new AndroidProguardInfo(
-          ImmutableList.copyOf(
-              localProguardSpecs.getContents(Artifact.class, "local_proguard_specs")));
+      return new AndroidProguardInfo(localProguardSpecs.getImmutableList());
     }
   }
 }

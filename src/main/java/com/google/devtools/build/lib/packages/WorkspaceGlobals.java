@@ -64,7 +64,7 @@ public class WorkspaceGlobals implements WorkspaceGlobalsApi {
   @Override
   public NoneType workspace(
       String name,
-      SkylarkDict<?, ?> managedDirectories, // <String, Object>
+      SkylarkDict<String, Object> managedDirectories,
       FuncallExpression ast,
       StarlarkThread thread)
       throws EvalException, InterruptedException {
@@ -97,8 +97,7 @@ public class WorkspaceGlobals implements WorkspaceGlobalsApi {
             RepositoryName.createFromValidStrippedName(name),
             RepositoryName.MAIN);
       }
-      parseManagedDirectories(
-          managedDirectories.getContents(String.class, Object.class, "managed_directories"), ast);
+      parseManagedDirectories(managedDirectories, ast);
       return NONE;
     } else {
       throw new EvalException(
@@ -108,11 +107,9 @@ public class WorkspaceGlobals implements WorkspaceGlobalsApi {
   }
 
   private void parseManagedDirectories(
-      Map<String, ?> managedDirectories, // <String, SkylarkList<String>>
-      FuncallExpression ast)
-      throws EvalException {
+      SkylarkDict<String, Object> managedDirectories, FuncallExpression ast) throws EvalException {
     Map<PathFragment, String> nonNormalizedPathsMap = Maps.newHashMap();
-    for (Map.Entry<String, ?> entry : managedDirectories.entrySet()) {
+    for (Map.Entry<String, Object> entry : managedDirectories.entrySet()) {
       RepositoryName repositoryName = createRepositoryName(entry.getKey(), ast.getLocation());
       List<PathFragment> paths =
           getManagedDirectoriesPaths(entry.getValue(), ast.getLocation(), nonNormalizedPathsMap);
