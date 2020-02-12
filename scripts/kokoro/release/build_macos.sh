@@ -39,8 +39,8 @@ output/bazel build \
     --embed_label "${RELEASE_NAME}" \
     --workspace_status_command=scripts/ci/build_status_command.sh \
     src/bazel \
-    scripts/packages/with-jdk/install.sh
-    scripts/packages/dmg:bazel-dmg
+    scripts/packages/with-jdk/install.sh \
+    scripts/packages/dmg/bazel.dmg
 
 mkdir artifacts
 cp "bazel-bin/src/bazel"  "artifacts/bazel-${RELEASE_NAME}-darwin-x86_64"
