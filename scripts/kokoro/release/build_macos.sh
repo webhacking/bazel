@@ -40,7 +40,9 @@ output/bazel build \
     --workspace_status_command=scripts/ci/build_status_command.sh \
     src/bazel \
     scripts/packages/with-jdk/install.sh
+    scripts/packages/dmg:bazel-dmg
 
 mkdir artifacts
 cp "bazel-bin/src/bazel"  "artifacts/bazel-${RELEASE_NAME}-darwin-x86_64"
 cp "bazel-bin/scripts/packages/with-jdk/install.sh" "artifacts/bazel-${RELEASE_NAME}-installer-darwin-x86_64.sh"
+cp "bazel-bin/scripts/packages/dmg/bazel.dmg" "artifacts/bazel-${RELEASE_NAME}-darwin-x86_64-unsigned.dmg"
