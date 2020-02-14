@@ -397,27 +397,53 @@ http_archive(
 
 load("@bazel_toolchains//rules:rbe_repo.bzl", "rbe_autoconfig")
 
+load("//:rbe_autoconfig/ubuntu1604_java8/versions.bzl",
+    ubuntu1604_toolchain_config_autogen_spec = "TOOLCHAIN_CONFIG_AUTOGEN_SPEC")
+
+load("//:rbe_autoconfig/ubuntu1804_java11/versions.bzl",
+    ubuntu1804_toolchain_config_autogen_spec = "TOOLCHAIN_CONFIG_AUTOGEN_SPEC")
+
+UBUNTU1604_TOOLCHAIN_CONFIG_SUITE_SPEC = {
+    "repo_name": "io_bazel",
+    "output_base": "rbe_autoconfig/ubuntu1604_java8",
+    "container_registry": "gcr.io",
+    "container_repo": "bazel-public/testing/ubuntu1604-bazel-java8",
+    "default_java_home": "/usr/lib/jvm/java-8-openjdk-amd64",
+    "toolchain_config_suite_autogen_spec": ubuntu1604_toolchain_config_autogen_spec,
+}
+
+UBUNTU1804_TOOLCHAIN_CONFIG_SUITE_SPEC = {
+    "repo_name": "io_bazel",
+    "output_base": "rbe_autoconfig/ubuntu1804_java11",
+    "container_registry": "gcr.io",
+    "container_repo": "bazel-public/testing/ubuntu1804-bazel-java11",
+    "default_java_home": "/usr/lib/jvm/java-11-openjdk-amd64",
+    "toolchain_config_suite_autogen_spec": ubuntu1804_toolchain_config_autogen_spec,
+}
+
 rbe_autoconfig(
-    name = "rbe_ubuntu1804_java11",
-    detect_java_home = True,
-    registry = "gcr.io",
-    repository = "bazel-public/ubuntu1804/bazel",
-    tag = "java11",
+    name = "rbe_ubuntu1604_java8_autogen",
+    export_configs = True,
+    toolchain_config_suite_spec = UBUNTU1604_TOOLCHAIN_CONFIG_SUITE_SPEC,
+)
+
+rbe_autoconfig(
+    name = "rbe_ubuntu1804_java11_autogen",
+    export_configs = True,
+    toolchain_config_suite_spec = UBUNTU1804_TOOLCHAIN_CONFIG_SUITE_SPEC,
 )
 
 rbe_autoconfig(
     name = "rbe_ubuntu1604_java8",
-    detect_java_home = True,
-    registry = "gcr.io",
-    repository = "bazel-public/ubuntu1604/bazel",
-    tag = "java8",
+    use_checked_in_confs = "Force",
+    toolchain_config_suite_spec = UBUNTU1604_TOOLCHAIN_CONFIG_SUITE_SPEC,
 )
 
-# Creates toolchain configuration for remote execution with BuildKite CI
-# for rbe_ubuntu1604.
-# To run the tests with RBE on BuildKite CI uncomment the two lines below
-# load("@bazel_toolchains//rules:rbe_repo.bzl", "rbe_autoconfig")
-# rbe_autoconfig(name = "buildkite_config")
+rbe_autoconfig(
+    name = "rbe_ubuntu1804_java11",
+    use_checked_in_confs = "Force",
+    toolchain_config_suite_spec = UBUNTU1804_TOOLCHAIN_CONFIG_SUITE_SPEC,
+)
 
 http_archive(
     name = "com_google_googletest",
